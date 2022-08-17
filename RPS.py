@@ -1,5 +1,5 @@
 import random
-
+import time
 rounds = int(
     input("Hello how many rounds of rock paper sissors would you like to play agianst the computer? We recomend 3: "))
 current_round = 0
@@ -30,8 +30,10 @@ while current_round < rounds and ((computer_points + user_points) - 1) < rounds:
             comp_input == 'Scissors' and user_input == 'Paper'):
         computer_points += 1
         current_round += 1
+        time.sleep(2)
         print(f'{comp_input} WINS! The Computer got a point!')
     elif comp_input == user_input:
+        time.sleep(2)
         print(f"You both chose {user_input}, That's a tie! Go again.")
     else:
         print("Did you enter Rock, Paper or Scissors? Please try again")
