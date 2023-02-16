@@ -1,7 +1,7 @@
 import random
 import time
 rounds = int(
-    input("Hello how many rounds of rock paper sissors would you like to play agianst the computer? We recomend 3: "))
+    input("Hello how many rounds of rock paper scissors would you like to play against the computer? We recommend 3: "))
 current_round = 0
 user_points = 0
 computer_points = 0
@@ -19,7 +19,7 @@ while current_round < rounds and ((computer_points + user_points) - 1) < rounds:
     random_num = random.randrange(0, 3, 1)
     comp_input = choices[random_num]
     print(f'{comp_input} vers {user_input} !')
-    # compare(user_input,comututer_output)
+    # compare(user_input,computer_output)
     if (user_input == 'Rock' and comp_input == 'Scissors') or (user_input == 'Paper' and comp_input == 'Rock') or (
             user_input == 'Scissors' and comp_input == 'Paper'):
         user_points += 1
@@ -44,6 +44,6 @@ if computer_points > user_points:
     print('computer wins')
 
 # when rounds are over ask if they want to play again. Y for yes and N for exit
-# best two out of three logic, not this quit after number of rounds.
+# the best two out of three logic, not this quit after number of rounds.
 # write exit game
 #add time between display of vrs and you win
