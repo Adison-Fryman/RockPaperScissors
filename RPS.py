@@ -1,49 +1,111 @@
 import random
 import time
-rounds = int(
-    input("Hello how many rounds of rock paper sissors would you like to play agianst the computer? We recomend 3: "))
-current_round = 0
-user_points = 0
-computer_points = 0
-# computer_output generation:
 
-choices = ['Rock', 'Paper', "Scissors"]
+
+class RockPaperScissors:
+
+    def __init__(self):
+        self.current_round = 0
+        self.user_points = 0
+        self.computer_points = 0
+        self.choices = ['Rock', 'Paper', "Scissors"]
+        #self.game = {user: [], computer: []}
+        self.comp_input = ''
+        self.user_input = ''
+
+    def computer_random_choice(self):
+        # produce random computer object choice
+        random_num = random.randrange(0, 3, 1)
+        self.comp_input = self.choices[random_num]
+
+    def user_choice(self):
+        # take player input
+            user_input = input(' Type your choice of either Rock, Paper or Scissors: ').lower().title()
+
+            if user_input in self.choices:
+                self.user_input = user_input
+            else:
+                print('That is not a valid choice, please submit: Rock, Paper, or Scissors')
+                user_input = input(' Type your choice of either Rock, Paper or Scissors: ').lower().title()
+
+    def compare_user_and_comp(self):
+        print(f'{self.comp_input} vers {self.user_input} !')
+        if (self.user_input == 'Rock' and self.comp_input == 'Scissors') or (
+                self.user_input == 'Paper' and self.comp_input == 'Rock') or (
+                self.user_input == 'Scissors' and self.comp_input == 'Paper'):
+            self.user_points += 1
+            self.current_round += 1
+            print(f'{self.user_input} WINS!!! You get a point!')
+
+        elif (self.comp_input == 'Rock' and self.user_input == 'Scissors') or (
+                self.comp_input == 'Paper' and self.user_input == 'Rock') or (
+                self.comp_input == 'Scissors' and self.user_input == 'Paper'):
+            self.computer_points += 1
+            self.current_round += 1
+            time.sleep(2)
+            print(f'{self.comp_input} WINS! The Computer got a point!')
+        elif self.comp_input == self.user_input:
+            time.sleep(2)
+            print(f"You both chose {self.user_input}, That's a tie! Go again.")
+        else:
+            print("Did you enter Rock, Paper or Scissors? Please try again")
+
+    def animation(self):
+        pass
+
+    def print_score(self):
+        print(f'''
+        SCORES ARE :
+        PERSON PLAYER: {self.user_points}  COMPUTER PLAYER: {self.computer_points}
+        ''')
+        pass
+
+    def winner_is(self):
+        print('''
+        The                                       Goes to:
+              W           W    I   N     N
+               W    W    W     I   N N   N
+                W  W  W W      I   N  N  N
+                 W     W       I   N     N       
+        ''')
+        if self.computer_points > self.user_points:
+            print("THE COMPUTER!!!>>>>SORRY!!!!!")
+        else:
+            print("YOU")
+
+    def run_game(self):
+        while True:
+            if self.computer_points >=2 or self.user_points >=2:
+                time.sleep(2)
+                self.winner_is()
+                break
+            else:
+                self.user_choice()
+                self.computer_random_choice()
+                self.compare_user_and_comp()
+                self.print_score()
+
+
+
+
 # game loop: goes for number of user specified rounds.
 
-while current_round < rounds and ((computer_points + user_points) - 1) < rounds:
-    print('The current round is ' + str(current_round) + '/' + str(rounds) + ' and the score is Computer: ' + str(
-        computer_points) + ' and You: ' + str(user_points))
-    # take player input
-    user_input = input(' Type your choice of either Rock, Paper or Scissors: ').lower().title()
-    # produce computer input
-    random_num = random.randrange(0, 3, 1)
-    comp_input = choices[random_num]
-    print(f'{comp_input} vers {user_input} !')
-    # compare(user_input,comututer_output)
-    if (user_input == 'Rock' and comp_input == 'Scissors') or (user_input == 'Paper' and comp_input == 'Rock') or (
-            user_input == 'Scissors' and comp_input == 'Paper'):
-        user_points += 1
-        current_round += 1
-        print(f'{user_input} WINS!!! You get a point!')
 
-    elif (comp_input == 'Rock' and user_input == 'Scissors') or (comp_input == 'Paper' and user_input == 'Rock') or (
-            comp_input == 'Scissors' and user_input == 'Paper'):
-        computer_points += 1
-        current_round += 1
-        time.sleep(2)
-        print(f'{comp_input} WINS! The Computer got a point!')
-    elif comp_input == user_input:
-        time.sleep(2)
-        print(f"You both chose {user_input}, That's a tie! Go again.")
-    else:
-        print("Did you enter Rock, Paper or Scissors? Please try again")
+# https://codereview.stackexchange.com/questions/231706/python-rock-paper-scissors-via-a-class-to-handle-the-game
 
-if user_points > computer_points:
-    print("you win with")
-if computer_points > user_points:
-    print('computer wins')
+if __name__ == "__main__":
+    game = RockPaperScissors()
+    game.run_game()
 
-# when rounds are over ask if they want to play again. Y for yes and N for exit
-# best two out of three logic, not this quit after number of rounds.
-# write exit game
-#add time between display of vrs and you win
+
+  #  continue_prompt = input('\nDo you want to play again? (y/n): ').lower()
+ #   if continue_prompt == 'n':
+ #       print("Your LAME!")
+ #       exit()
+  #  elif continue_prompt == 'y':
+
+  #  else:
+       # print("Invalid input!\n")
+
+
+
