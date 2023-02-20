@@ -1,6 +1,9 @@
 import random
 import time
+import logging
 
+logging.basicConfig(filename='test.log', level=logging.DEBUG,
+                    format='%(asctime)s:%(funcName)s:%(levelname)s:%(message)s')
 
 class RockPaperScissors:
 
@@ -9,7 +12,6 @@ class RockPaperScissors:
         self.user_points = 0
         self.computer_points = 0
         self.choices = ['Rock', 'Paper', "Scissors"]
-        #self.game = {user: [], computer: []}
         self.comp_input = ''
         self.user_input = ''
 
@@ -20,21 +22,28 @@ class RockPaperScissors:
 
     def user_choice(self):
         # take player input
+        while True:
             user_input = input(' Type your choice of either Rock, Paper or Scissors: ').lower().title()
 
             if user_input in self.choices:
                 self.user_input = user_input
+                logging.info(f'user gave correct input:{self.user_input}')
+                break
             else:
                 print('That is not a valid choice, please submit: Rock, Paper, or Scissors')
-                user_input = input(' Type your choice of either Rock, Paper or Scissors: ').lower().title()
+                #user_input = input(' Type your choice of either Rock, Paper or Scissors: ').lower().title()
+                logging.info("user did not enter correct input")
+                continue
 
     def compare_user_and_comp(self):
+        logging.info(f'comp: {self.comp_input} vers user: {self.user_input} ')
         print(f'{self.comp_input} vers {self.user_input} !')
         if (self.user_input == 'Rock' and self.comp_input == 'Scissors') or (
                 self.user_input == 'Paper' and self.comp_input == 'Rock') or (
                 self.user_input == 'Scissors' and self.comp_input == 'Paper'):
             self.user_points += 1
             self.current_round += 1
+            logging.info('user gets a point')
             print(f'{self.user_input} WINS!!! You get a point!')
 
         elif (self.comp_input == 'Rock' and self.user_input == 'Scissors') or (
@@ -43,11 +52,14 @@ class RockPaperScissors:
             self.computer_points += 1
             self.current_round += 1
             time.sleep(2)
+            logging.info('computer gets a point')
             print(f'{self.comp_input} WINS! The Computer got a point!')
         elif self.comp_input == self.user_input:
             time.sleep(2)
+            logging.info('user and computer had the same item choice')
             print(f"You both chose {self.user_input}, That's a tie! Go again.")
         else:
+            #it should never get to this line
             print("Did you enter Rock, Paper or Scissors? Please try again")
 
     def animation(self):
@@ -62,11 +74,11 @@ class RockPaperScissors:
 
     def winner_is(self):
         print('''
-        The                                       Goes to:
-              W           W    I   N     N
-               W    W    W     I   N N   N
-                W  W  W W      I   N  N  N
-                 W     W       I   N     N       
+        The                                      Goes to:
+                W           W    I   N     N
+                 W    W    W     I   N N   N
+                  W  W  W W      I   N  N  N
+                   W     W       I   N     N       
         ''')
         if self.computer_points > self.user_points:
             print("THE COMPUTER!!!>>>>SORRY!!!!!")
@@ -74,12 +86,15 @@ class RockPaperScissors:
             print("YOU")
 
     def run_game(self):
+        logging.info("---new game started----")
         while True:
             if self.computer_points >=2 or self.user_points >=2:
                 time.sleep(2)
                 self.winner_is()
+                logging.info('game is over')
                 break
             else:
+                logging.info('round started')
                 self.user_choice()
                 self.computer_random_choice()
                 self.compare_user_and_comp()
@@ -96,6 +111,8 @@ class RockPaperScissors:
 if __name__ == "__main__":
     game = RockPaperScissors()
     game.run_game()
+
+
 
 
   #  continue_prompt = input('\nDo you want to play again? (y/n): ').lower()
