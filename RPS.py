@@ -15,25 +15,22 @@ class RockPaperScissors:
         self.comp_input = ''
         self.user_input = ''
 
+    def get_inputs(self):
+        user_input = input("Enter Rock, Paper, or Scissors: ").lower().title()
+        self.user_input = user_input
+        return user_input
+
     def computer_random_choice(self):
         # produce random computer object choice
         random_num = random.randrange(0, 3, 1)
         self.comp_input = self.choices[random_num]
 
-    def user_choice(self):
-        # take player input
-        while True:
-            user_input = input(' Type your choice of either Rock, Paper or Scissors: ').lower().title()
-
-            if user_input in self.choices:
-                self.user_input = user_input
-                logging.info(f'user gave correct input:{self.user_input}')
-                break
-            else:
-                print('That is not a valid choice, please submit: Rock, Paper, or Scissors')
-                #user_input = input(' Type your choice of either Rock, Paper or Scissors: ').lower().title()
-                logging.info("user did not enter correct input")
-                continue
+    def user_choice_check(self):
+        while self.user_input not in self.choices:
+            print('That is not a valid choice, please submit: Rock, Paper, or Scissors')
+            self.user_input = input("Enter Rock, Paper, or Scissors: ").lower().title()
+            logging.info("user did not enter correct input")
+        logging.info(f'user gave correct input:{self.user_input}')
 
     def compare_user_and_comp(self):
         logging.info(f'comp: {self.comp_input} vers user: {self.user_input} ')
@@ -95,7 +92,8 @@ class RockPaperScissors:
                 break
             else:
                 logging.info('round started')
-                self.user_choice()
+                self.get_inputs()
+                self.user_choice_check()
                 self.computer_random_choice()
                 self.compare_user_and_comp()
                 self.print_score()
